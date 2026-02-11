@@ -1,12 +1,375 @@
-<html>
-<head><title>图书管理系统</title></head>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>技术求职个人主页 | 编程项目展示</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Consolas", "Monaco", "Courier New", monospace; /* 等宽字体，贴近IDE */
+        }
+
+        /* 定义IDE风格配色变量 */
+        :root {
+            --ide-bg: #121212;          /* 深色模式主背景 */
+            --ide-bg-light: #1E1E1E;    /* 卡片/区块背景（模拟VS Code编辑器背景） */
+            --text-main: #FFFFFF;       /* 白色主文本 */
+            --text-secondary: #CCCCCC;  /* 次要文本浅灰色 */
+            --code-green: #00FF00;      /* 代码高亮绿色 */
+            --code-orange: #FFA500;     /* 代码高亮橙色 */
+            --accent-blue: #007ACC;     /* 强调色（VS Code蓝色） */
+            --border-color: #333333;    /* 边框色 */
+        }
+
+        /* 页面主体 */
+        body {
+            background-color: var(--ide-bg);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* 导航栏（模拟IDE顶部菜单栏） */
+        nav {
+            background-color: var(--ide-bg-light);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            color: var(--accent-blue);
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--code-green);
+        }
+
+        /* 个人简介区（模拟IDE欢迎页） */
+        .profile {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 3rem;
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            background-color: var(--ide-bg-light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .profile-img span {
+            color: var(--accent-blue);
+            font-size: 4rem;
+        }
+
+        .profile-info h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        .profile-info .title {
+            color: var(--code-orange);
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-info p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 700px;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            background-color: var(--ide-bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--code-green);
+            margin-right: 0.8rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        /* 项目展示区 */
+        .projects {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--accent-blue);
+            border-left: 4px solid var(--code-green);
+            padding-left: 1rem;
+        }
+
+        .project-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background-color: var(--ide-bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+        }
+
+        .project-header {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .project-header h3 {
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-header .tech-stack {
+            color: var(--code-orange);
+            font-size: 0.9rem;
+        }
+
+        .project-body {
+            padding: 1.5rem;
+        }
+
+        .project-desc {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* 代码展示块（核心IDE风格） */
+        .code-block {
+            background-color: var(--ide-bg);
+            border-radius: 4px;
+            padding: 1rem;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+        }
+
+        .code-keyword {
+            color: var(--code-orange);
+        }
+
+        .code-string {
+            color: var(--code-green);
+        }
+
+        .code-comment {
+            color: #6A9955; /* IDE注释灰绿色 */
+        }
+
+        .project-links {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-links a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .project-links a:hover {
+            color: var(--code-green);
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: var(--ide-bg-light);
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 6rem;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .profile {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .project-container {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
 <body>
-<h2 align="center">图书管理系统</h2>
-<p align="center"><a href="add.html">添加图书信息</a><p>
-<table align="center"width="50%"border="1"><tr><th>书名</th><th>作者</th><th>出版社</th><th>价格</th><th>管理</th></tr>
-<tr><td>XML详解</td><td>王红丽</td><td>吉林大学出版社</td><td>34</td><td><a href='edit.html'>修改</a>&nbsp;<a href='#'>删除</a></td></tr>
-<tr><td>JSP技术大全</td><td>张勇</td><td>清华大学出版社</td><td>45</td><td><a href='edit.html'>修改</a>&nbsp;<a href='#'>删除</a></td></tr>
-<tr><td>Java编程快速人门</td><td>赵坤</td><td>东软电子出版社</td><td>39</td><td><a href='edit.html'>修改</a>&nbsp;<a href='#'>删除</a></td></tr>
-</table>
+    <!-- 导航栏（模拟IDE顶部栏） -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">DevPortfolio / IDE Theme</div>
+            <div class="nav-links">
+                <a href="#profile">个人简介</a>
+                <a href="#projects">项目成果</a>
+                <a href="#contact">联系方式</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 个人简介区 -->
+    <section id="profile" class="profile">
+        <div class="profile-img">
+            <span><img src="01.jpg" width="110"></span>
+        </div>
+        <div class="profile-info">
+            <h1>杨炳勋</h1>
+            <div class="title">嵌入式开发工程师 |全栈开发工程师 | AI算法爱好者</div>
+            <p>5年编程经验，专注于Python/Java后端开发与机器学习算法落地，擅长高并发系统设计和数据挖掘项目。曾主导电商平台订单系统重构，性能提升80%；自研推荐算法模型，用户转化率提升15%。求职目标：AI工程师/后端高级开发岗位。</p>
+            <div class="skills">
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">Java</span>
+                <span class="skill-tag">TensorFlow</span>
+                <span class="skill-tag">MySQL</span>
+                <span class="skill-tag">Redis</span>
+                <span class="skill-tag">微服务</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目展示区 -->
+    <section id="projects" class="projects">
+        <h2 class="section-title">项目成果展示</h2>
+        <div class="project-container">
+            <!-- 项目1 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>智能推荐算法系统</h3>
+                    <div class="tech-stack">技术栈：Python、TensorFlow、Redis、FastAPI</div>
+                </div>
+                <div class="project-body">
+                    <p class="project-desc">基于协同过滤与深度学习的混合推荐模型，对接电商用户行为数据，实现个性化商品推荐，上线后用户点击率提升22%，复购率提升18%。</p>
+                    <!-- 代码展示块（模拟IDE代码高亮） -->
+                    <div class="code-block">
+                        <pre><span class="code-comment"># 核心推荐算法片段</span>
+<span class="code-keyword">def</span> hybrid_recommend(user_id: str, top_k: int = 10) -> List[dict]:
+    <span class="code-comment"># 1. 协同过滤推荐</span>
+    cf_recs = collaborative_filtering(user_id, top_k=20)
+    <span class="code-comment"># 2. 深度学习模型推荐</span>
+    dl_recs = deep_learning_model.predict(user_id, top_k=20)
+    <span class="code-comment"># 3. 融合策略</span>
+    final_recs = fuse_recommendations(cf_recs, dl_recs, top_k)
+    <span class="code-keyword">return</span> final_recs
+
+<span class="code-comment"># 模型训练关键代码</span>
+model = Sequential([
+    Embedding(input_dim=vocab_size, output_dim=64),
+    LSTM(128),
+    Dense(64, activation=<span class="code-string">'relu'</span>),
+    Dense(vocab_size, activation=<span class="code-string">'softmax'</span>)
+])
+model.compile(optimizer=<span class="code-string">'adam'</span>, loss=<span class="code-string">'categorical_crossentropy'</span>)</pre>
+                    </div>
+                    <div class="project-links">
+                        <a href="#">查看源码 →</a>
+                        <a href="#">在线演示 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 项目2 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>高并发订单系统重构</h3>
+                    <div class="tech-stack">技术栈：Java、SpringCloud、MySQL、Redis、RocketMQ</div>
+                </div>
+                <div class="project-body">
+                    <p class="project-desc">针对电商订单系统峰值性能瓶颈，采用微服务拆分、读写分离、缓存集群、消息队列削峰等方案，支撑每秒5000+订单处理，系统响应时间从500ms降至80ms。</p>
+                    <!-- 代码展示块（模拟IDE代码高亮） -->
+                    <div class="code-block">
+                        <pre><span class="code-comment">// 订单提交核心代码（分布式锁+消息异步）</span>
+<span class="code-keyword">@Override</span>
+<span class="code-keyword">public</span> OrderSubmitResponse submitOrder(OrderSubmitRequest request) {
+    <span class="code-comment">// 1. 分布式锁防止重复下单</span>
+    <span class="code-keyword">try</span> (RLock lock = redissonClient.getLock(<span class="code-string">"order:submit:"</span> + request.getUserId())) {
+        <span class="code-keyword">if</span> (lock.tryLock(3, 10, TimeUnit.SECONDS)) {
+            <span class="code-comment">// 2. 核心业务逻辑</span>
+            OrderDO order = buildOrder(request);
+            orderMapper.insert(order);
+            <span class="code-comment">// 3. 异步处理库存、支付、通知</span>
+            rocketMQTemplate.send(<span class="code-string">"order_topic"</span>, MessageBuilder.withPayload(order).build());
+            <span class="code-keyword">return</span> OrderSubmitResponse.success(order.getOrderId());
+        }
+        <span class="code-keyword">return</span> OrderSubmitResponse.fail(<span class="code-string">"请勿重复提交"</span>);
+    } <span class="code-keyword">catch</span> (Exception e) {
+        log.error(<span class="code-string">"submit order error"</span>, e);
+        <span class="code-keyword">return</span> OrderSubmitResponse.fail(<span class="code-string">"系统异常"</span>);
+    }
+}</pre>
+                    </div>
+                    <div class="project-links">
+                        <a href="#">查看源码 →</a>
+                        <a href="#">性能报告 →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <p>邮箱：zhangsan@example.com | 电话：13800138000 | GitHub：github.com/zhangsan-dev</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">© 2026 技术求职个人主页 - 基于IDE深色主题设计</p>
+    </footer>
 </body>
 </html>
