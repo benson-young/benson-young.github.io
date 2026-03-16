@@ -1,0 +1,12 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
+html,
+body {
+  background-color: $light;
+  color: $text;
+}
+
+a {
+  color: inherit;
+}

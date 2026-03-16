@@ -1,2 +1,9 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# 统一文本文件使用 LF 换行符（提交时自动转换）
+* text=auto eol=lf
+
+# 二进制文件（图片、视频等）不转换
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
+*.zip binary
