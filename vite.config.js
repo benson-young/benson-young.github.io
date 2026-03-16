@@ -25,7 +25,7 @@ export default defineConfig({
     }
   },
   // 适配GitHub Pages（仓库名，若为xxx.github.io则填'/'）
-  base: '/your-portfolio/', // 替换为你的仓库名！！！
+  base: '/benson-young.github.io/', // 替换为你的仓库名！！！
   server: {
     open: true // 启动后自动打开浏览器
   },
